@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import EventCard from "../components/EventCard";
 
 const Events = () => {
@@ -10,32 +10,40 @@ const Events = () => {
     { id: 3, title: "Business Expo", date: "2025-05-20T09:00:00Z", location: "Kisumu" }
   ];
 
-  const filteredEvents = events.filter(event => 
+  const filteredEvents = events.filter(event =>
     event.title.toLowerCase().includes(search.toLowerCase()) ||
     event.location.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="container py-12">
-      <h1 className="text-3xl font-bold mb-6">All Events</h1>
+    <div className="container mx-auto px-4 py-12">
+      {/* Header Section */}
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-extrabold text-gray-800">Explore Events</h1>
+        <p className="text-lg text-gray-500 mt-2">Find your next great experience!</p>
+      </div>
 
       {/* Search Input */}
-      <input 
-        type="text"
-        placeholder="Search events..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-md mb-6"
-      />
+      <div className="flex justify-center mb-8">
+        <input
+          type="text"
+          placeholder="Search events..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300"
+        />
+      </div>
 
       {/* Events Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {filteredEvents.length > 0 ? (
-          filteredEvents.map(event => <EventCard key={event.id} event={event} />)
-        ) : (
-          <p className="text-gray-500">No events found.</p>
-        )}
-      </div>
+      {filteredEvents.length > 0 ? (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredEvents.map(event => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 text-lg mt-6">No events found.</p>
+      )}
     </div>
   );
 };
